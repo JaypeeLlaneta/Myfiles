@@ -1,0 +1,41 @@
+Activity 5.  
+ CREATE TABLE indoor_games (
+    kid_id NUMBER,
+    kid_name VARCHAR2(50)
+);
+
+CREATE TABLE outdoor_games (
+    kid_id NUMBER,
+    kid_name VARCHAR2(50)
+);
+-- Indoor Games
+INSERT INTO indoor_games VALUES (1, 'joven');
+INSERT INTO indoor_games VALUES (2, 'Brix');
+INSERT INTO indoor_games VALUES (3, 'marvin');
+
+-- Outdoor Games
+INSERT INTO outdoor_games VALUES (1, 'joven');
+INSERT INTO outdoor_games VALUES (3, 'Brix');
+INSERT INTO outdoor_games VALUES (4, 'Aron');
+SELECT indoor_games.kid_name
+FROM indoor_games
+JOIN outdoor_games ON indoor_games.kid_id = outdoor_games.kid_id;
+
+ALTER TABLE indoor_games ADD favorite_game VARCHAR2(50);
+ALTER TABLE outdoor_games ADD favorite_game VARCHAR2(50);
+
+UPDATE indoor_games SET favorite_game = 'Chess' WHERE kid_id = 1;UPDATE indoor_games SET favorite_game = 'Table Tennis' WHERE kid_id = 2;
+UPDATE indoor_games SET favorite_game = 'throws' WHERE kid_id = 3;
+
+UPDATE outdoor_games SET favorite_game = 'Soccer' WHERE kid_id = 1;
+UPDATE outdoor_games SET favorite_game = 'Basketball' WHERE kid_id = 3;
+UPDATE outdoor_games SET favorite_game = 'Badminton' WHERE kid_id = 4;
+
+SELECT indoor_games.kid_name, indoor_games.favorite_game AS indoor_favorite,
+       outdoor_games.favorite_game AS outdoor_favorite  
+FROM indoor_games
+JOIN outdoor_games ON indoor_games.kid_id = outdoor_games.kid_id;
+
+SELECT COALESCE(indoor_games.kid_name, outdoor_games.kid_name) AS kid_name
+FROM indoor_games
+FULL OUTER JOIN outdoor_games ON indoor_games.kid_id = outdoor_games.kid_id;
